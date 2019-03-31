@@ -1,34 +1,44 @@
 package dds.quemepongo;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import dds.quemepongo.model.Color;
+import dds.quemepongo.model.Material;
+import dds.quemepongo.model.Prenda;
+import dds.quemepongo.model.TipoPrenda;
+
 
 /**
- * Unit test for simple App.
+ * Test de QueMePongo
  */
-public class AppTest 
-    extends TestCase {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName ) {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite() {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp() {
-        assertTrue( true );
-    }
+public class AppTest {
+	
+	/**
+	 * Asegurar que no pueden crearse prendas sin tipo
+	 */
+	@Test(expected = NullPointerException.class)
+	public void whenCreateWithNonTipo() {
+		Color colorPrincipal = new Color(13,13,13);
+		Prenda prenda = new Prenda(Material.TELA, colorPrincipal, null);
+		prenda.getTipo();
+	}
+	
+	/**
+	 * Asegurar que no pueden crearse prendas sin material
+	 */
+	@Test(expected = NullPointerException.class)
+	public void whenCreateWithNonMaterial() {
+		Color colorPrincipal = new Color(13,13,13);
+		Prenda prenda = new Prenda(null, colorPrincipal, TipoPrenda.CAMISA);
+		prenda.getMaterial();
+	}
+	
+	/**
+	 * Asegurar que no pueden crearse prendas sin color principal
+	 */
+	@Test(expected = NullPointerException.class)
+	public void whenCreateWithNonColor() {
+		Prenda prenda = new Prenda(Material.TELA, null, TipoPrenda.CAMISA);
+		prenda.getColorPrincipal();
+	}
 }
